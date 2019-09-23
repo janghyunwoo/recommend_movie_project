@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kwon.smb.rating.RatingMapper">
+<insert id="registerRating" parameterType="com.kwon.smb.rating.Rating">
+		insert into rating values(#{userid}, #{movieid}, #{rating}, #{comment})
+	</insert>
+	
+	<select id="getComment" 
+		parameterType="com.kwon.smb.rating.Rating"
+		resultType="com.kwon.smb.rating.Comment">
+		select users.id,rating,comment from rating,users where rating.userid=users.userid and movieid=#{movieid}
+	</select>
+	<select id="getMyRating" 
+		parameterType="com.kwon.smb.user.User"
+		resultType="com.kwon.smb.rating.MyRating">
+		select movies.movieid, movies.img, movies.title, rating.rating, rating.comment from rating,movies where rating.movieid=movies.movieid and userid=#{userid}
+	</select>
+	<delete id="deleteMyRating" parameterType="com.kwon.smb.rating.Rating">
+		delete from rating where
+		movieid=#{movieid} and userid=#{userid}
+	</delete>
+	<update id="updateMyRating"
+		parameterType="com.kwon.smb.rating.Rating">
+		update rating
+		set rating=#{rating},
+		comment=#{comment}
+		where
+		userid=#{userid} and movieid=#{movieid}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

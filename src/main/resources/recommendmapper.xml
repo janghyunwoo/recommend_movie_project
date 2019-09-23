@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kwon.smb.mahout.RecommendMapper">
+
+	<select id="RecommendUserBase"
+		parameterType="java.util.HashMap" 
+		resultType="com.kwon.smb.mahout.RecommendMovieOfUserBase">
+		select * from movies where 
+		<foreach collection="code_list" index="index" item="item" open="(" close=")" separator="or">
+			movieid = #{item}
+		</foreach>
+	</select>
+	<select id="getMyRating_4StarOver" 
+		parameterType="com.kwon.smb.user.User"
+		resultType="com.kwon.smb.mahout.RecommendMovieBase">
+		select rating.movieid, movies.img, movies.title, rating.rating, rating.comment from rating,movies 
+		where rating.movieid=movies.movieid and rating<![CDATA[>=]]>4 and userid=#{userid}
+	</select>
+	<select id="RecommendMovieBase"
+		parameterType="java.util.HashMap" 
+		resultType="com.kwon.smb.mahout.RecommendMovieBaseIndex">
+		select movieid,title from movies where 
+		<foreach collection="code_list" index="index" item="item" open="(" close=")" separator="or">
+			movieid = #{item}
+		</foreach>
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
